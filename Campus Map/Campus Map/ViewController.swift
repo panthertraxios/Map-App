@@ -11,7 +11,7 @@ import MapKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
-    
+    ///TESTING COMMMENT
     
     fileprivate let locationManager:CLLocationManager = CLLocationManager()
     override func viewDidLoad() {

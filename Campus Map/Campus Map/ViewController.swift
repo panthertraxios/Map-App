@@ -11,88 +11,10 @@ import MapKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
-   
-    /*
+
     override func loadView() {
-        super.loadView()
-      
-        var points = [ [10, 1], [5, 6], [1, 1] ];
-        var coords = points.map(function(point) {
-            return new mapkit.Coordinate(point[0], point[1]);
-        });
-        
-        var style = new mapkit.Style({
-            lineWidth: 2,
-            lineJoin: "round",
-            lineDash: [8, 4],
-            strokeColor: "#F0F"
-        });
-        
-        var polyline = new mapkit.PolylineOverlay(coords, { style: style });
-        map.addOverlay(polyline);
-        
-        
-        "coordinates": [
-        [
-        [
-        -80.0881862,
-        26.6113639
-        ],
-        [
-        -80.0877947,
-        26.6113615
-        ],
-        [
-        -80.087706,
-        26.6115485
-        ],
-        [
-        -80.0876684,
-        26.6116972
-        ],
-        [
-        -80.087655,
-        26.6119346
-        ],
-        [
-        -80.0875987,
-        26.6120953
-        ],
-        [
-        -80.087317,
-        26.6120857
-        ],
-        [
-        -80.0871479,
-        26.6121408
-        ],
-        [
-        -80.0867804,
-        26.6121288
-        ],
-        [
-        -80.0867858,
-        26.6122895
-        ],
-        [
-        -80.0866945,
-        26.6123662
-        ],
-        [
-        -80.0861526,
-        26.6123566
-        ],
-        [
-        -80.0855865,
-        26.6123614
-        ]
-        ]
-        ]
-     }
-        */
-        
-        
-   
+    super.loadView()
+    }
     
     fileprivate let locationManager:CLLocationManager = CLLocationManager()
     override func viewDidLoad() {

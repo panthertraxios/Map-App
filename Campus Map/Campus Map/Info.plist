@@ -43,7 +43,7 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Campus Map would like to use your location</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Campus Map would like to use your location</string>
 </dict>
 </plist>

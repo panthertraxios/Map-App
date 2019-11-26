@@ -8,10 +8,18 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
-   
+    @IBOutlet weak var destinationField: UITextField!
+    @IBOutlet weak var sourceField: UITextField!
+    @IBAction func GoBtn(_ sender: UIButton) {
+        view.endEditing(true)
+        performSegue(withIdentifier: "show_directions", sender: self)
+    }
+    
+    var location = CLLocationManager()
     /*
     override func loadView() {
         super.loadView()
@@ -30,81 +38,86 @@ class ViewController: UIViewController {
         
         var polyline = new mapkit.PolylineOverlay(coords, { style: style });
         map.addOverlay(polyline);
-        
-        
-        coordinates: [26.6113639, -80.0881862],[-26.6113615, 80.0877947],[-26.6115485, 80.087706],[-26.6116972, 80.0876684],[-26.6119346, 80.087655],[-26.6120953, 80.0875987],[-26.6120857, 80.087317],[-26.6121408, 80.0871479],[-26.6121288, 80.0867804],[-26.6122895, 80.0867858],[-26.6123662, 80.0866945],[-26.6123566, 80.0861526],[-26.6123614, 80.0855865]
      }
         */
-        
-        
-   
     
-    fileprivate let locationManager:CLLocationManager = CLLocationManager()
+    var locationTuples: [(textField: UITextField!, mapItem: MKMapItem?)]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
       
         //tracks user location
         
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.startUpdatingLocation()
+        location.delegate = self
         
-        mapView.showsUserLocation = true
+        self.location.requestAlwaysAuthorization()
+        self.location.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            location.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            location.startUpdatingLocation()
+        }
+        
+        locationTuples = [(sourceField, nil), (destinationField, nil)]
+        
+        
+        
 
         
         //plots center point of map
         let initialLocation = CLLocation(latitude:  26.61296, longitude: -80.087034)
         
- centerMapOnLocation(location: initialLocation)
+        centerMapOnLocation(location: initialLocation)
         
         
         
         
         
         
- //plotting humanities building
-        let HumanitiesBuilding = Buildings(title: "Humanities", code: "HU",
-                              coordinate: CLLocationCoordinate2D(latitude:26.611598, longitude: -80.088096))
-        mapView.addAnnotation(HumanitiesBuilding)
+// //plotting humanities building
+//        let HumanitiesBuilding = Buildings(title: "Humanities", code: "HU",
+//                              coordinate: CLLocationCoordinate2D(latitude:26.611598, longitude: -80.088096))
+////        mapView.addAnnotation(HumanitiesBuilding)
+//
+//        //plotting techology center
+//        let TechBuilding = Buildings(title: "Technology", code: "TC",
+//                                  coordinate: CLLocationCoordinate2D(latitude:26.612644, longitude: -80.087486))
+////        mapView.addAnnotation(TechBuilding)
+//
+//
+//        //plotting bookstore
+//        let BookstoreBuilding = Buildings(title: "Bookstore", code: "BK",
+//                                     coordinate: CLLocationCoordinate2D(latitude:26.612334, longitude: -80.085447))
+////        mapView.addAnnotation(BookstoreBuilding)
+//
+//        //plotting cafeteria
+//        let CafeteriaBuilding = Buildings(title: "Cafeteria", code: "CF",
+//                                          coordinate: CLLocationCoordinate2D(latitude:26.612363, longitude: -80.084887))
+////        mapView.addAnnotation(CafeteriaBuilding)
+//
+//
+//        //plotting Registration/Admissions
+//        let RegistrationBuilding = Buildings(title: "Registration/Admissions", code: "PG",
+//                                          coordinate: CLLocationCoordinate2D(latitude:26.612688,longitude: -80.084977))
+////        mapView.addAnnotation(RegistrationBuilding)
+//
+//        //plotting gym
+//        let GymBuilding = Buildings(title: "Gymnasium", code: "PE",
+//                                             coordinate: CLLocationCoordinate2D(latitude:26.611906, longitude: -80.084074))
+////        mapView.addAnnotation(GymBuilding)
+//
+//
+//        //plotting Natural Science
+//        let NaturalScienceBuilding = Buildings(title: "Natural Science", code: "NS",
+//                                    coordinate: CLLocationCoordinate2D(latitude:26.613854, longitude:   -80.088036))
+////        mapView.addAnnotation(NaturalScienceBuilding)
+//
         
-        //plotting techology center
-        let TechBuilding = Buildings(title: "Technology", code: "TC",
-                                  coordinate: CLLocationCoordinate2D(latitude:26.612644, longitude: -80.087486))
-        mapView.addAnnotation(TechBuilding)
         
         
-        //plotting bookstore
-        let BookstoreBuilding = Buildings(title: "Bookstore", code: "BK",
-                                     coordinate: CLLocationCoordinate2D(latitude:26.612334, longitude: -80.085447))
-        mapView.addAnnotation(BookstoreBuilding)
-        
-        //plotting cafeteria
-        let CafeteriaBuilding = Buildings(title: "Cafeteria", code: "CF",
-                                          coordinate: CLLocationCoordinate2D(latitude:26.612363, longitude: -80.084887))
-        mapView.addAnnotation(CafeteriaBuilding)
-     
-        
-        //plotting Registration/Admissions
-        let RegistrationBuilding = Buildings(title: "Registration/Admissions", code: "PG",
-                                          coordinate: CLLocationCoordinate2D(latitude:26.612688,longitude: -80.084977))
-        mapView.addAnnotation(RegistrationBuilding)
-        
-        //plotting gym
-        let GymBuilding = Buildings(title: "Gymnasium", code: "PE",
-                                             coordinate: CLLocationCoordinate2D(latitude:26.611906, longitude: -80.084074))
-        mapView.addAnnotation(GymBuilding)
-        
-        
-        //plotting Natural Science
-        let NaturalScienceBuilding = Buildings(title: "Natural Science", code: "NS",
-                                    coordinate: CLLocationCoordinate2D(latitude:26.613854, longitude:   -80.088036))
-        mapView.addAnnotation(NaturalScienceBuilding)
-     
-        
-        
-        
-       // plotting Security SEC 26.611588, -80.088482
+       
     }
 
         
@@ -121,7 +134,7 @@ class ViewController: UIViewController {
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
                                                                   regionRadius, regionRadius)
-        mapView.setRegion(coordinateRegion, animated: true)
+//        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     
@@ -129,7 +142,27 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func createRoute(mapView: MKMapView, route: String, location: CLLocation) {
+        
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        CLGeocoder().reverseGeocodeLocation(locations.last!,
+        completionHandler:
+            {(placemarks:[CLPlacemark]?, error:NSError) -> Void in
+                if let placemarks = placemarks {
+                let placemark = placemarks[0]
+                self.locationTuples[0].mapItem = MKMapItem(placemark: MKPlacemark(coordinate: placemark.location!.coordinate, addressDictionary: placemark.addressDictionary as! [String:AnyObject]?))
+                self.sourceField.text = "Your location"
+            }
+                })
+        
+        
+    }
 
 
 }
+
 

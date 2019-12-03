@@ -10,16 +10,16 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var destinationField: UITextField!
     @IBOutlet weak var sourceField: UITextField!
     @IBAction func GoBtn(_ sender: UIButton) {
         view.endEditing(true)
-        performSegue(withIdentifier: "show_directions", sender: self)
+        performSegue(withIdentifier: "map", sender: self)
     }
     
-    var location = CLLocationManager()
+    let locationManager = CLLocationManager()
     /*
     override func loadView() {
         super.loadView()
@@ -50,14 +50,14 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
       
         //tracks user location
         
-        location.delegate = self
+        locationManager.delegate = self
         
-        self.location.requestAlwaysAuthorization()
-        self.location.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
-            location.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            location.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
         }
         
         locationTuples = [(sourceField, nil), (destinationField, nil)]
@@ -147,22 +147,26 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
         
     }
+}
+    
+extension ViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         CLGeocoder().reverseGeocodeLocation(locations.last!,
         completionHandler:
-            {(placemarks:[CLPlacemark]?, error:NSError) -> Void in
+            {(placemarks:[CLPlacemark]?, error:Error) -> Void in
                 if let placemarks = placemarks {
                 let placemark = placemarks[0]
                 self.locationTuples[0].mapItem = MKMapItem(placemark: MKPlacemark(coordinate: placemark.location!.coordinate, addressDictionary: placemark.addressDictionary as! [String:AnyObject]?))
-                self.sourceField.text = "Your location"
+                self.sourceField.text = 
             }
-                })
-        
-        
+                } as! CLGeocodeCompletionHandler)
+
+
     }
-
-
 }
+
+
+
 
 

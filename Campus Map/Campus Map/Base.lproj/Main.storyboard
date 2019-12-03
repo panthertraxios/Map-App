@@ -11,7 +11,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="map" id="BYZ-38-t0r" customClass="ViewController" customModule="Campus_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="map" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="Campus_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -29,6 +29,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="dX6-5u-T5G"/>
                     <connections>
                         <outlet property="mapView" destination="Zdd-Ih-wcY" id="vCf-Gz-Epf"/>
                     </connections>
@@ -89,7 +90,7 @@
                     <connections>
                         <outlet property="destinationField" destination="LmF-c3-tnt" id="pGG-5c-kMg"/>
                         <outlet property="sourceField" destination="rbH-IT-PRH" id="7fN-T6-gla"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="show_directions" id="hIp-TZ-57T"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="map" id="3r4-Z7-X7a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ko5-fl-QuZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

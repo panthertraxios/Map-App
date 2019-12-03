@@ -20,28 +20,12 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     let locationManager = CLLocationManager()
-    /*
+    
     override func loadView() {
         super.loadView()
-      
-        var points = [ [10, 1], [5, 6], [1, 1] ];
-        var coords = points.map(function(point) {
-            return new mapkit.Coordinate(point[0], point[1]);
-        });
-        
-        var style = new mapkit.Style({
-            lineWidth: 2,
-            lineJoin: "round",
-            lineDash: [8, 4],
-            strokeColor: "#F0F"
-        });
-        
-        var polyline = new mapkit.PolylineOverlay(coords, { style: style });
-        map.addOverlay(polyline);
      }
-        */
     
-    var locationTuples: [(textField: UITextField!, mapItem: MKMapItem?)]!
+    var locationTuples: [(textField: UITextField?, mapItem: MKMapItem?)]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +52,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         //plots center point of map
         let initialLocation = CLLocation(latitude:  26.61296, longitude: -80.087034)
-        
         centerMapOnLocation(location: initialLocation)
         
         
@@ -114,10 +97,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
 //                                    coordinate: CLLocationCoordinate2D(latitude:26.613854, longitude:   -80.088036))
 ////        mapView.addAnnotation(NaturalScienceBuilding)
 //
-        
-        
-        
-       
     }
 
         
@@ -130,11 +109,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     
     //sets the radius from the center point to display
-    let regionRadius: CLLocationDistance = 500
     func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                                  regionRadius, regionRadius)
-//        mapView.setRegion(coordinateRegion, animated: true)
+        let regionRadius: CLLocationDistance = 500
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,regionRadius, regionRadius)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     
@@ -154,13 +132,12 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         CLGeocoder().reverseGeocodeLocation(locations.last!,
         completionHandler:
-            {(placemarks:[CLPlacemark]?, error:Error) -> Void in
+            {(placemarks:[CLPlacemark]?, error:Error?) -> Void in
                 if let placemarks = placemarks {
                 let placemark = placemarks[0]
                 self.locationTuples[0].mapItem = MKMapItem(placemark: MKPlacemark(coordinate: placemark.location!.coordinate, addressDictionary: placemark.addressDictionary as! [String:AnyObject]?))
-                self.sourceField.text = 
             }
-                } as! CLGeocodeCompletionHandler)
+                })
 
 
     }

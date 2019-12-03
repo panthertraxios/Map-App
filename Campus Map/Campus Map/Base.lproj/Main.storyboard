@@ -31,7 +31,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="dX6-5u-T5G"/>
                     <connections>
-                        <outlet property="mapView" destination="Zdd-Ih-wcY" id="vCf-Gz-Epf"/>
+                        <outlet property="mapView" destination="Zdd-Ih-wcY" id="wax-f8-tyn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

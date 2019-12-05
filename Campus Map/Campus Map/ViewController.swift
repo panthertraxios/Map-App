@@ -52,7 +52,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         //plots center point of map
         let initialLocation = CLLocation(latitude:  26.61296, longitude: -80.087034)
-        centerMapOnLocation(location: initialLocation)
+        if mapView != nil {
+            centerMapOnLocation(location: initialLocation)
+        }
         
         
         
